@@ -1,20 +1,34 @@
-<script setup lang="ts"> 
-import { BookService } from '@/services/BookService.js'; 
+<script setup lang="ts">
+import { BookService } from '@/services/BookService.js';
 
 const books = BookService.getBooks();
-</script> 
- 
-<template> 
-  <section> 
-    <div class="max-w-7xl mx-auto"> 
-      <div class="flex justify-end mb-6"> 
-        <RouterLink 
-          to="/books/create" 
-          class="inline-block bg-blue-600 text-white font-semibold px-5 py-2 rounded hover:bg-blue-700 transition" 
-          >+ Add Book</RouterLink 
-        > 
+
+function deleteLastBook() {
+  BookService.deleteLastBook();
+}
+</script>
+
+<template>
+  <section>
+    <div class="max-w-7xl mx-auto">
+      <div class="flex justify-end mb-6 gap-3">
+        <RouterLink
+          to="/books/create"
+          class="inline-flex items-center bg-blue-600 text-white font-semibold px-5 py-2 rounded hover:bg-blue-700 transition"
+        >
+          + Add Book
+        </RouterLink>
+
+        <button
+          type="button"
+          @click="deleteLastBook"
+          :disabled="books.length === 0"
+          class="inline-flex items-center bg-red-600 text-white font-semibold px-5 py-2 rounded hover:bg-red-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          - Delete Book
+        </button>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"> 
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div v-for="book in books" :key="book.id"> 
           <div 
             class="bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300 p-6 border border-gray-200" 
