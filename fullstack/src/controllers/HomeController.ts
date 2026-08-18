@@ -23,14 +23,14 @@ export class HomeController {
     res.render('home/contact', { viewData: viewData });
   }
 
-  static Main_Point(req: Request, res: any) { 
+  static Main_Point(req: Request, res: any): void { 
     const viewData: any = {}; 
-     viewData["books"] = books; 
+    viewData["books"] = books; 
+    
     res.render('home/books', viewData); 
   } 
 
-  static show(req: Request, res: Response): void  
-  { 
+  static show(req: Request, res: Response): void { 
     const id = Number(req.params.id);
 
     if (Number.isNaN(id)) {
