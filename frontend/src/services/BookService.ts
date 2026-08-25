@@ -1,5 +1,5 @@
 import type { BookInterface } from '@/interfaces/BookInterface'; 
-import { useBookStore } from '@/stores/bookstore.js'; 
+import { useBookStore } from '@/stores/BookStore.js'; 
 import type { CreateBookDTO } from '@/dtos/CreateBookDTO.js'; 
 
 export class BookService {

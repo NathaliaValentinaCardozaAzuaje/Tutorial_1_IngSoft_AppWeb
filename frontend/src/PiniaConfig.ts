@@ -1,7 +1,8 @@
 import { createPinia } from 'pinia'; 
 import { watch } from 'vue'; 
-import { bookSeeder } from '@/stores/bookseeder.js'; 
- 
+import { bookSeeder } from '@/stores/BookSeeder.js'; 
+import { reviewSeeder } from '@/stores/ReviewSeeder.js'; 
+
 export default class PiniaConfig { 
   public static init() { 
     const pinia = createPinia(); 
@@ -14,6 +15,9 @@ export default class PiniaConfig {
       pinia.state.value = { 
         book: { 
           books: bookSeeder, 
+        },
+        review: { 
+          reviews: reviewSeeder, 
         }, 
       }; 
  

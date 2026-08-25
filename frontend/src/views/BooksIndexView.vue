@@ -1,11 +1,29 @@
 <script setup lang="ts">
 import { BookService } from '@/services/BookService.js';
+import OtherService from '@/services/OtherService.js'; 
+import { computed, ref } from 'vue'; 
+import { formatCOP } from '@/utils/currency';
 
 const books = BookService.getBooks();
+
+// selectors 
+const selectorCategories = OtherService.getUniqueBookCategories(); 
+const selectedCategory = ref(''); 
+
+const filteredBooks = computed(() => {
+  if (!selectedCategory.value) {
+    return books;
+  }
+
+  return books.filter(
+    book => book.category === selectedCategory.value
+  );
+});
 
 function deleteLastBook() {
   BookService.deleteLastBook();
 }
+
 </script>
 
 <template>
@@ -27,9 +45,18 @@ function deleteLastBook() {
         >
           - Delete Book
         </button>
+
+        <div class="flex justify-end mb-6"> 
+          <select v-model="selectedCategory" class="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring focus:border-blue-300"> 
+            <option value="">All Categories</option> 
+            <option v-for="category in selectorCategories" :key="category" :value="category"> 
+              {{ category }} 
+            </option> 
+          </select> 
+        </div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div v-for="book in books" :key="book.id"> 
+        <div v-for="book in filteredBooks" :key="book.id"> 
           <div 
             class="bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300 p-6 border border-gray-200" 
           > 
@@ -64,7 +91,7 @@ function deleteLastBook() {
             <div class="bg-gray-50 rounded-lg p-3 mb-4"> 
               <div class="flex justify-between text-sm"> 
                 <span class="text-gray-600">Price:</span> 
-                <span class="font-semibold">${{ book.price }}</span> 
+                <span class="font-semibold">{{ formatCOP(book.price) }} COP</span> 
               </div> 
             </div> 
  
