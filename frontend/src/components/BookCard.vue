@@ -13,8 +13,6 @@ defineProps<{
 
     <p>{{ formatCOP(book.price) }}</p>
 
-    <RouterLink :to="`/books/${book.id}`">
-      Ver libro
-    </RouterLink>
+    <RouterLink :to="`/books/${book.id}`"> Ver libro </RouterLink>
   </article>
 </template>
